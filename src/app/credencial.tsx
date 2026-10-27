@@ -1,4 +1,6 @@
 
+import { Image } from "expo-image";
+import { Redirect, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import {
   Alert,
@@ -10,13 +12,10 @@ import {
   Text,
   View,
 } from "react-native";
-import { Image } from "expo-image";
-import { Redirect, router } from "expo-router";
 
 import MuaNfc, { type NfcStatus } from "../../modules/mua-nfc";
-import AppButton from "../components/AppButton";
-import Notice from "../components/Notice";
 import { fullName } from "../api/monsterball";
+import AppButton from "../components/AppButton";
 import { useSession } from "../session";
 import { styles } from "../styles";
 import { colors, radius, spacing } from "../theme";
@@ -342,27 +341,6 @@ export default function Credencial() {
             >
               {user.id}
             </Text>
-
-            <View
-              style={{
-                backgroundColor: colors.accent,
-                width: 42,
-                height: 42,
-                borderRadius: 21,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.bg,
-                  fontWeight: "900",
-                  fontSize: 18,
-                }}
-              >
-                M
-              </Text>
-            </View>
           </View>
         </View>
 
@@ -540,91 +518,103 @@ export default function Credencial() {
       </View>
 
       {/* PANEL NFC SEPARADO */}
+      
+{/* ACCESO SIN CONTACTO */}
+  <View
+    style={{
+      paddingVertical: spacing.lg,
+      borderTopWidth: 2,
+      borderBottomWidth: 1,
+      borderColor: colors.border,
+      gap: spacing.md,
+    }}
+  >
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Text
+        style={{
+          color: colors.accent,
+          fontSize: 11,
+          fontWeight: "900",
+          letterSpacing: 2,
+        }}
+      >
+        02 / ACCESO
+      </Text>
+
       <View
         style={{
-          backgroundColor: colors.surface,
-          borderWidth: 1,
-          borderColor: colors.border,
-          borderRadius: 10,
-          padding: spacing.lg,
-          gap: spacing.md,
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 7,
         }}
       >
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={{ flex: 1, gap: 4 }}>
-            <Text
-              style={{
-                color: colors.text,
-                fontSize: 18,
-                fontWeight: "900",
-              }}
-            >
-              Acceso sin contacto
-            </Text>
-
-            <Text style={styles.muted}>
-              ESTADO DEL SISTEMA NFC
-            </Text>
-          </View>
-
-          <View
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              backgroundColor: colors.surfaceAlt,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                color: colors.accent,
-                fontSize: 21,
-                fontWeight: "900",
-              }}
-            >
-              NFC
-            </Text>
-          </View>
-        </View>
-
-        <View
-          style={{
-            height: 1,
-            backgroundColor: colors.border,
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            backgroundColor: notice.tone === "ok"
+              ? colors.success
+              : colors.accent,
           }}
         />
-
-        <Notice
-          tone={notice.tone}
-          title={notice.title}
-          detail={notice.detail}
-        />
-
-        {"action" in notice ? (
-          <AppButton
-            label="Abrir ajustes de NFC"
-            variant="secondary"
-            onPress={() => MuaNfc?.openNfcSettings()}
-          />
-        ) : null}
 
         <Text
-          style={[
-            styles.muted,
-            { fontSize: 11, textAlign: "center" },
-          ]}
+          style={{
+            color: colors.muted,
+            fontSize: 10,
+            fontWeight: "800",
+            letterSpacing: 1,
+          }}
         >
-          El lector determina si el acceso es autorizado.
+          {notice.tone === "ok" ? "ACTIVO" : "REVISAR"}
         </Text>
       </View>
+    </View>
+
+    <Text
+      style={{
+        color: colors.text,
+        fontSize: 25,
+        fontWeight: "900",
+        letterSpacing: -0.5,
+      }}
+    >
+      Tu entrada.
+      {"\n"}
+      Sin contacto.
+    </Text>
+
+    <Text style={styles.body}>
+      {notice.tone === "ok"
+        ? "Acerca la parte trasera de tu teléfono al lector para presentar tu identificador."
+        : notice.detail}
+    </Text>
+
+    {("action" in notice) && (
+      <AppButton
+        label="Activar NFC"
+        variant="secondary"
+        onPress={() => MuaNfc?.openNfcSettings()}
+      />
+    )}
+
+    <Text
+      style={{
+        color: colors.muted,
+        fontSize: 10,
+        letterSpacing: 0.5,
+      }}
+    >
+      LA AUTORIZACIÓN DEPENDE DEL LECTOR
+    </Text>
+  </View>
 
       {/* RESULTADO DE DETECCIÓN DEL LECTOR */}
       {detection ? (
@@ -848,17 +838,96 @@ export default function Credencial() {
           paddingBottom: spacing.lg,
         }}
       >
-        <AppButton
-          label="Créditos"
-          variant="secondary"
-          onPress={() => router.push("/creditos")}
-        />
+        
+<View
+  style={{
+    gap: spacing.md,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.lg,
+  }}
+>
+  <Pressable
+    accessibilityRole="button"
+    onPress={() => router.push("/creditos")}
+    style={{
+      backgroundColor: colors.text,
+      padding: spacing.lg,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderRadius: 8,
+    }}
+  >
+    <View style={{ gap: 4 }}>
+      <Text
+        style={{
+          color: colors.bg,
+          fontSize: 10,
+          fontWeight: "800",
+          letterSpacing: 2,
+        }}
+      >
+        CONOCE EL PROYECTO
+      </Text>
 
-        <AppButton
-          label="Cerrar sesión"
-          variant="secondary"
-          onPress={confirmSignOut}
-        />
+      <Text
+        style={{
+          color: colors.bg,
+          fontSize: 19,
+          fontWeight: "900",
+        }}
+      >
+        Equipo y créditos
+      </Text>
+    </View>
+
+    <Text
+      style={{
+        color: colors.accent,
+        fontSize: 28,
+        fontWeight: "800",
+      }}
+    >
+      →
+    </Text>
+  </Pressable>
+
+  <Pressable
+    accessibilityRole="button"
+    onPress={confirmSignOut}
+    style={{
+      borderWidth: 1,
+      borderColor: colors.border,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.md,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      borderRadius: 8,
+    }}
+  >
+    <Text
+      style={{
+        color: colors.text,
+        fontSize: 14,
+        fontWeight: "800",
+      }}
+    >
+      Cerrar sesión
+    </Text>
+
+    <Text
+      style={{
+        color: colors.accent,
+        fontSize: 18,
+        fontWeight: "900",
+      }}
+    >
+      ↗
+    </Text>
+  </Pressable>
+</View>
+
       </View>
 
       <Text

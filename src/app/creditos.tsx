@@ -1,6 +1,6 @@
 
-import { Image, ScrollView, Text, View } from "react-native";
 import { router } from "expo-router";
+import { Image, ScrollView, Text, View } from "react-native";
 
 import AppButton from "../components/AppButton";
 import TechItem from "../components/TechItem";
@@ -253,16 +253,6 @@ export default function Creditos() {
                 EQUIPO MUA
               </Text>
             </View>
-
-            <Text
-              style={{
-                color: colors.accent,
-                fontSize: 20,
-                fontWeight: "900",
-              }}
-            >
-              ↗
-            </Text>
           </View>
         ))}
       </View>
@@ -546,7 +536,7 @@ export default function Creditos() {
       </View>
 
       <AppButton
-        label="REGRESAR A MI CREDENCIAL"
+        label=" <-- REGRESAR A MI CREDENCIALS"
         onPress={() => router.back()}
       />
     </ScrollView>

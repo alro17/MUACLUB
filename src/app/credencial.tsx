@@ -903,6 +903,7 @@ export default function Credencial() {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      backgroundColor: '#902923',
       borderRadius: 8,
     }}
   >
@@ -911,20 +912,13 @@ export default function Credencial() {
         color: colors.text,
         fontSize: 14,
         fontWeight: "800",
-      }}
+        textAlign: "center",
+            }}
     >
       Cerrar sesión
     </Text>
 
-    <Text
-      style={{
-        color: colors.accent,
-        fontSize: 18,
-        fontWeight: "900",
-      }}
-    >
-      ↗
-    </Text>
+  
   </Pressable>
 </View>
 

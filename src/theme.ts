@@ -1,10 +1,10 @@
 // Identidad visual de MUA Club: azul deportivo, azul petróleo y acento turquesa.
 export const colors = {
-  bg: "#0B1726",
-  surface: "#13283A",
-  surfaceAlt: "#1D3B50",
+  bg: "#3D348D",
+  surface: "#10002B",
+  surfaceAlt: "#22223B",
   border: "#31536A",
-  accent: "#39D0C8",
+  accent: "#C77DFF",
   accentDark: "#147E83",
   cream: "#F3F8FB",
   text: "#F3F8FB",
